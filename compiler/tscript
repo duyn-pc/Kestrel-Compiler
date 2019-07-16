@@ -1,0 +1,57 @@
+#!/bin/sh
+# tscript  -- test script for the Kestrel Compiler
+# Tests all the types of lexemes: identifiers, keywords, integers, punctuations
+# strings, eof of file, and errors
+
+# Integer Test Module ---------------------------------------------------------
+# Tests regular num like 0 and 8 so far. Needs base implementations, 16#3FE
+cat tests/int.txt | ./testlex > out.txt
+# To create the expected output test file. 
+./tests/intout > tempout.txt
+# To remove the new line at EOF of expected output
+tr -d '\n' < tempout.txt > expectedout.txt
+
+# Compares the output from our compiler to the expected output 
+if ! diff out.txt expectedout.txt
+	then echo "INT TEST FAILED!"
+else
+	echo "INT TEST PASSED!"
+fi
+
+# Punctuation Test Module -----------------------------------------------------
+cat tests/punct.txt | ./testlex > out.txt
+./tests/punctout > tempout.txt
+tr -d '\n' < tempout.txt > expectedout.txt
+
+if ! diff out.txt expectedout.txt
+	then echo "PUNCT TEST FAILED!"
+else 
+	echo "PUNCT TEST PASSED!"
+fi
+
+# String Test Module ----------------------------------------------------------
+cat tests/str.txt | ./testlex > out.txt
+./tests/strout > tempout.txt
+tr -d '\n' < tempout.txt > expectedout.txt
+
+if ! diff out.txt expectedout.txt
+	then echo "STR TEST FAILED!"
+else 
+	echo "STR TEST PASSED!"
+fi
+
+
+# Identifier Test Module ----------------------------------------------------------
+cat tests/id.txt | ./testlex > out.txt
+./tests/idOut > tempout.txt
+tr -d '\n' < tempout.txt > expectedout.txt
+
+if ! diff out.txt expectedout.txt
+	then echo "ID TEST FAILED!"
+else 
+	echo "ID TEST PASSED!"
+fi
+
+#rm out.txt
+#rm tempout.txt
+#rm expectedout.txt

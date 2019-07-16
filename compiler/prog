@@ -1,0 +1,4 @@
+x: const 5
+int32:  type 1 .. 10000
+y: final 5+3+3
+z: var int32

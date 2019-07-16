@@ -1,0 +1,21 @@
+Guide for using the test input, outputs, and scripts
+It is likely that we will combine all lexemes into a single file once we are 
+further along. 
+
+Compiler Input Files:
+-- int.txt      -- has numbers to test the integer lexeme in compiler
+-- punc.txt     -- has punctuation like ; ( ) to test punctuation lexeme
+-- str.txt      -- has all letters and numbers in quotations
+-- err.txt      -- tests the possible lexeme errors
+-- hello.txt    -- kestrel code for hello world
+-- fib.txt      -- kestrel code for fibonacci code
+
+Output files:
+	NOTE: Until we change the compiler outputs, these files must end with a
+	      single whitespace ' ' and the newline at the end must be removed
+	      in tscript with tr -d. Since cat cannot show whitespace, we will
+	      use an echo script to keep things tidy to one file. 
+-- intout
+-- punctout
+-- strout
+

@@ -1,0 +1,11 @@
+catch range in 
+    for i in uint32 do
+        putstr( "fib(", output )
+	putdec( i )
+	putstr( ") = " )
+	putdec( fib( i ) )
+	putchar( NL, output )
+    end
+case range:
+    putstr( "unprintable"+NL, output )
+end

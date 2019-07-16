@@ -1,0 +1,47 @@
+README file for dwjones, Group A
+
+This is the reference version for all software distributed in class
+
+Files are:
+-- MAKEFILE          -- builder for all products of this code
+-- error.cpp         -- error framework
+-- LEXICAL --------------------------------------------------------------------
+-- lexical.cpp       -- code of the lexical analyzer
+-- lexical.h         -- interface spec for lexical.cpp
+-- symboltable.cpp   -- used by lex to find identifiers
+-- stringpool.cpp    -- to handle strings in the lexical
+-- puncmap.cpp       -- map to find punctuations values
+-- charclass.h       -- character classifier used only by lexical.cpp
+-- keywords.cpp      -- output keywords of each lexical
+-- PARSER ---------------------------------------------------------------------
+-- term.cpp          -- various classes in our parser
+-- factor.cpp
+-- comparand.cpp 
+-- expression.cpp
+-- assigment.cpp 
+-- statement.cpp
+-- block.cpp
+-- value.cpp
+-- declaration.cpp
+-- environment.cpp
+-- type.cpp
+-- reference.cpp
+-- const_decl.cpp
+-- element.cpp
+-- subrange.cpp
+-- CODEGEN --------------------------------------------------------------------
+-- codegenerator.cpp -- our code generator
+-- codegenerator.h   -- interface for the code generator
+-- TEST ----------------------------------------------------------------------
+-- testlex.cpp       -- test code for lexical analyzer, and nothing else
+-- ts2.sh            -- test script framework for the compiler
+-- tests             -- folder containing TESTREADME and various test inputs and outs
+
+
+How to run:
+$ make kestrel
+$./kestrel inputfile -o outputfile
+
+Note: The current version may have debug printouts. To redirect printouts to a file:
+$./kestrel inputfile -o outputfile > debug.txt
+

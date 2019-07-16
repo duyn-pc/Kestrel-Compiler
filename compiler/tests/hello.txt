@@ -1,0 +1,1 @@
+putstring( "Hello World"+LF, output );

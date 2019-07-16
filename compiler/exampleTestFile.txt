@@ -1,0 +1,2 @@
+putstring( "Hello world!"+LF, output );
+putstring( "This is our Kestrel Compiler!"+LF, output );

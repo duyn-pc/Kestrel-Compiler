@@ -1,0 +1,286 @@
+> <kestrel program>
+/ <empty>
+
+<kestrel program> ::= <block> <end of file>
+# start set:   {
+
+<block> ::= { <block element> [ ";" ] }
+# start set:   {
+# follow set:  <end of file> "end" [ ] } { "until"
+
+<block element> ::= <declaration>
+                 |  <statement>
+# start set:   <identifier> "restricted" "do" "if" "select" "catch" "raise"
+#              "while" "for"
+# follow set:  [
+
+<declaration> ::= <identifier> ":" [ "private"
+               |  "restricted" ] <declarator>
+# start set:   <identifier> "restricted"
+# follow set:  [
+
+<declarator> ::= <constant declarator>
+              |  <type declarator>
+              |  <exception declarator>
+              |  <variable declarator>
+              |  <procedure declarator>
+              |  <function declarator>
+# start set:   "const" "final" "type" "exception" "var" "procedure" "function"
+# follow set:  [
+
+<constant declarator> ::= "const" <expression>
+                       |  "final" <expression>
+# start set:   "const" "final"
+# follow set:  [
+
+<expression> ::= <comparand> [ <comparing operator> <comparand> ]
+# start set:   [ "~"
+# follow set:  ".." [ ] ")" "]" "}" { }
+
+<comparand> ::= <term> { <adding operator> <term> }
+# start set:   [ "~"
+# follow set:  [ ]
+
+<term> ::= <factor> { <multiplying operator> <factor> }
+# start set:   [ "~"
+# follow set:  { }
+
+<factor> ::= [ "-"
+          |  "~" ] <value>
+# start set:   [ "~"
+# follow set:  { }
+
+<value> ::= <number>
+         |  <string constant>
+         |  "null"
+         |  <reference>
+         |  <subexpression>
+# start set:   <identifier> <number> "null" "(" "[" "{" <string>
+# follow set:  { }
+
+<string constant> ::= <string>
+# start set:   <string>
+# follow set:  { }
+
+<reference> ::= <identifier>
+             |  <reference> "@"
+             |  <reference> "." <identifier>
+             |  <function call>
+             |  <constructor call>
+             |  <array reference>
+# start set:   <identifier>
+# follow set:  "@" "." ] [ "=" { } "(" "[" "{"
+
+<function call> ::= <reference> [ <expression list> ]
+# start set:   <identifier>
+# follow set:  "@" "." ] [ "=" { } "(" "[" "{"
+
+<expression list> ::= "(" <expressions> ")"
+                   |  "[" <expressions> "]"
+                   |  "{" <expressions> "}"
+# start set:   "(" "[" "{"
+# follow set:  ] "@" "." [ "=" { } "(" "[" "{"
+
+<expressions> ::= <expression> { [ "," ] <expression> }
+# start set:   [ "~"
+# follow set:  ")" "]" "}"
+
+<constructor call> ::= <reference> [ <expression list> ]
+# start set:   <identifier>
+# follow set:  "@" "." ] [ "=" { } "(" "[" "{"
+
+<array reference> ::= <reference> <expression list>
+# start set:   <identifier>
+# follow set:  "@" "." ] [ "=" { } "(" "[" "{"
+
+<subexpression> ::= "(" <expression> ")"
+                 |  "[" <expression> "]"
+                 |  "{" <expression> "}"
+# start set:   "(" "[" "{"
+# follow set:  { }
+
+<multiplying operator> ::= "*"
+                        |  "/"
+                        |  "%"
+                        |  "&"
+# start set:   "*" "/" "%" "&"
+# follow set:  [ "~"
+
+<adding operator> ::= "+"
+                   |  "-"
+                   |  "|"
+# start set:   "+" "-" "|"
+# follow set:  [ "~"
+
+<comparing operator> ::= "="
+                      |  "/="
+                      |  ">"
+                      |  ">="
+                      |  "<"
+                      |  "<="
+                      |  "in"
+# start set:   "=" "in" "/=" ">" ">=" "<" "<="
+# follow set:  [ "~"
+
+<type declarator> ::= "type" <type>
+                   |  "type" "-"
+# start set:   "type"
+# follow set:  [
+
+<type> ::= <reference>
+        |  <enumeration>
+        |  <subrange>
+        |  <pointer>
+        |  <array>
+        |  <set>
+        |  <record>
+# start set:   <identifier> "enum" "@" "array" "set" "record" [ "~"
+# follow set:  [ { }
+
+<enumeration> ::= "enum" "(" <identifier> { [ "," ] <identifier> } ")"
+               |  "enum" "[" <identifier> { [ "," ] <identifier> } "]"
+               |  "enum" "{" <identifier> { [ "," ] <identifier> } "}"
+# start set:   "enum"
+# follow set:  [ { }
+
+<subrange> ::= <expression> ".." <expression>
+# start set:   [ "~"
+# follow set:  [ { }
+
+<pointer> ::= "@" <type>
+# start set:   "@"
+# follow set:  [ { }
+
+<array> ::= "array" <type> [ "of" ] <type>
+         |  "array" "of" <type>
+# start set:   "array"
+# follow set:  [ { }
+
+<set> ::= "set" [ "of" ] <type>
+# start set:   "set"
+# follow set:  [ { }
+
+<record> ::= "record" [ "+" <reference> ] <block> "end"
+# start set:   "record"
+# follow set:  [ { }
+
+<exception declarator> ::= "exception"
+# start set:   "exception"
+# follow set:  [
+
+<variable declarator> ::= "var" <type>
+# start set:   "var"
+# follow set:  [
+
+<procedure declarator> ::= "procedure" [ <formal parameter list> ] <body>
+# start set:   "procedure"
+# follow set:  [
+
+<formal parameter list> ::= "(" <formal parameters> ")"
+                         |  "[" <formal parameters> "]"
+                         |  "{" <formal parameters> "}"
+# start set:   "(" "[" "{"
+# follow set:  ]
+
+<formal parameters> ::= <parameter> { [ "," ] <parameter> }
+# start set:   <identifier>
+# follow set:  ")" "]" "}"
+
+<parameter> ::= <identifier> ":" <parameter declarer>
+# start set:   <identifier>
+# follow set:  { }
+
+<parameter declarer> ::= <type>
+                      |  "var" <type>
+                      |  "final" <type>
+# start set:   "var" "final" <identifier> "enum" "@" "array" "set" "record" [
+#              "~"
+# follow set:  { }
+
+<body> ::= <block> "end"
+        |  "-"
+        |  "external"
+# start set:   "-" { "external"
+# follow set:  [
+
+<function declarator> ::= "function" <type> [ <formal parameter list> ] <body>
+# start set:   "function"
+# follow set:  [
+
+<statement> ::= <do end>
+             |  <if>
+             |  <case>
+             |  <loop>
+             |  <exception handler>
+             |  <raise>
+             |  <procedure call>
+             |  <assignment>
+# start set:   <identifier> "do" "if" "select" "catch" "raise" "while" "for"
+# follow set:  [
+
+<do end> ::= "do" <block> "end"
+# start set:   "do"
+# follow set:  [
+
+<if> ::= "if" <expression> [ "then" ] <block> [ "else" <block> ] "end"
+# start set:   "if"
+# follow set:  [
+
+<case> ::= "select" <expression> [ "in" ] { "case" <case label> { [ "," ]
+           <case label> } ":" <block> } [ "else" <block> ] "end"
+# start set:   "select"
+# follow set:  [
+
+<case label> ::= <expression> [ ".." <expression> ]
+# start set:   [ "~"
+# follow set:  { }
+
+<loop> ::= <while loop>
+        |  <until loop>
+        |  <for loop>
+# start set:   "do" "while" "for"
+# follow set:  [
+
+<while loop> ::= "while" <expression> [ "do" ] <block> "end"
+# start set:   "while"
+# follow set:  [
+
+<until loop> ::= "do" <block> "until" <expression>
+# start set:   "do"
+# follow set:  [
+
+<for loop> ::= "for" <identifier> "in" <type> [ "do" ] <block> "end"
+# start set:   "for"
+# follow set:  [
+
+<exception handler> ::= "catch" <exception list> "in" <block> { "case"
+                        <exception list> ":" <block> } [ "else" <block> ] "end"
+# start set:   "catch"
+# follow set:  [
+
+<exception list> ::= <reference> { [ "," ] <reference> }
+# start set:   <identifier>
+# follow set:  "in" ":"
+
+<raise> ::= "raise" <reference>
+# start set:   "raise"
+# follow set:  [
+
+<procedure call> ::= <reference> [ <expression list> ]
+# start set:   <identifier>
+# follow set:  [
+
+<assignment> ::= <reference> "=" <expression>
+# start set:   <identifier>
+# follow set:  [
+
+
+# terminals:   <end of file> { [ ";" ] } <identifier> ":" "private" "restricted"
+#              "const" "final" "type" "-" "exception" "var" "procedure"
+#              "function" "end" "external" "(" ")" "[" "]" "{" "}" "," "enum"
+#              ".." "@" "array" "of" "set" "record" "+" "do" "if" "then" "else"
+#              "select" "in" "case" "while" "until" "for" "catch" "raise" "="
+#              "/=" ">" ">=" "<" "<=" "|" "*" "/" "%" "&" "~" <number> "null"
+#              <string> "."
+
+# unused terminals:  <empty>
