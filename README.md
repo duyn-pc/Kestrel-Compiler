@@ -2,7 +2,8 @@
 This is a class project with three fellow class members to create a compiler for the [Kestrel Language](http://homepage.divms.uiowa.edu/~jones/compiler/kestrel/) using C++. This was the final project for the University of Iowa's 2018 Compiler Construction class.
 
 ## To Run
-Project is designed for Linux. Clone and type "make" in the linux terminal. 
+Project is designed for Linux. Clone compiler folder to your system.
+In linux terminal, enter the "compiler" directory and type "make".
 Type "./kestrel" + name of Kestrel file to start compiler. 
 
 ## My Contributions
